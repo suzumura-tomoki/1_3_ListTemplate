@@ -1806,6 +1806,5 @@ namespace ex01_DataStructure
 			EXPECT_TRUE((cit - -2) == list.GetEnd());//末尾範囲外
 		}
 
-		//TODO コンストのイテレータについて同じテストをする
 	}//namespace chapter2
 }//namespace ex01_DataStructure
