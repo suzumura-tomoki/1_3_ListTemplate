@@ -1,7 +1,5 @@
 #include<fstream>
-#include"DoublyLinkedList.h"
-#include"DoublyLinkedList.inl"
-#include"ResultData.h"
+#include"main.h"
 
 int main() {
 

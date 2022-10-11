@@ -22,7 +22,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{d025545b-fc79-4a5e-8608-318f983924c9}</ProjectGuid>
-    <RootNamespace>My１３双方向リストのテンプレート化</RootNamespace>
+    <RootNamespace>My1_3_リストのテンプレート化</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>1_3_リストのテンプレート化</ProjectName>
   </PropertyGroup>
@@ -141,6 +141,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DoublyLinkedList.h" />
+    <ClInclude Include="main.h" />
     <ClInclude Include="ResultData.h" />
   </ItemGroup>
   <ItemGroup>

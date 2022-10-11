@@ -13,7 +13,7 @@
 #include"ManualTestForList.h"
 
 // テスト対象のヘッダファイル
-#include "../課題１_双方向リスト/DoublyLinkedList.h"
+#include "../1_3_リストのテンプレート化/main.h"
 
 namespace ex01_DataStructure
 {
@@ -33,7 +33,7 @@ namespace ex01_DataStructure
 		TEST(ListManualTest, TestGetDataNumWhenConst)
 		{
 #if defined TT_TEST_GET_DATA_NUM_WHEN_CONST
-			const DoublyLinkedList list;
+			const DoublyLinkedList<ResultData> list;
 			EXPECT_EQ(0, list.GetSize());
 #endif //TT_TEST_GET_DATA_NUM_WHEN_CONST
 			SUCCEED();
@@ -49,8 +49,8 @@ namespace ex01_DataStructure
 		TEST(ListManualTest, TestInsertWhenConst)
 		{
 #if defined TT_TEST_INSERT_WHEN_CONST
-			const DoublyLinkedList list;
-			DoublyLinkedList::ConstIterator it = list.GetConstBegin();
+			const DoublyLinkedList<ResultData> list;
+			DoublyLinkedList<ResultData>::ConstIterator<ResultData> it = list.GetConstBegin();
 			list.AddNode(it, 1);//ここでエラー
 #endif //TT_TEST_INSERT_WHEN_CONST
 			SUCCEED();
@@ -66,8 +66,8 @@ namespace ex01_DataStructure
 		TEST(ListManualTest, TestDeleteWhenConst)
 		{
 #if defined TT_TEST_DELETE_WHEN_CONST
-			const DoublyLinkedList list;
-			DoublyLinkedList::ConstIterator it = list.GetConstBegin();
+			const DoublyLinkedList<ResultData> list;
+			DoublyLinkedList<ResultData>::ConstIterator<ResultData> it = list.GetConstBegin();
 			list.DeleteNode(it);//ここでエラー
 #endif //TT_TEST_DELETE_WHEN_CONST
 			SUCCEED();
@@ -83,7 +83,7 @@ namespace ex01_DataStructure
 		TEST(ListManualTest, TestGetBeginWhenConst)
 		{
 #if defined TT_TEST_GET_BEGIN_WHEN_CONST
-			const DoublyLinkedList list;
+			const DoublyLinkedList<ResultData> list;
 			list.GetBegin();//ここでエラー
 #endif //TT_TEST_GET_BEGIN_WHEN_CONST
 			SUCCEED();
@@ -99,7 +99,7 @@ namespace ex01_DataStructure
 		TEST(ListManualTest, TestGetConstBeginWhenConst)
 		{
 #if defined TT_TEST_GET_CONST_BEGIN_WHEN_CONST
-			const DoublyLinkedList list;
+			const DoublyLinkedList<ResultData> list;
 			list.GetConstBegin();
 #endif //TT_TEST_GET_CONST_BEGIN_WHEN_CONST
 			SUCCEED();
@@ -115,7 +115,7 @@ namespace ex01_DataStructure
 		TEST(ListManualTest, TestGetEndWhenConst)
 		{
 #if defined TT_TEST_GET_END_WHEN_CONST
-			const DoublyLinkedList list;
+			const DoublyLinkedList<ResultData> list;
 			list.GetEnd();
 #endif //TT_TEST_GET_END_WHEN_CONST
 			SUCCEED();
@@ -131,7 +131,7 @@ namespace ex01_DataStructure
 		TEST(ListManualTest, TestGetConstEndWhenConst)
 		{
 #if defined TT_TEST_GET_CONST_END_WHEN_CONST
-			const DoublyLinkedList list;
+			const DoublyLinkedList<ResultData> list;
 			list.GetConstEnd();
 #endif //TT_TEST_GET_END_WHEN_CONST
 			SUCCEED();
@@ -147,8 +147,8 @@ namespace ex01_DataStructure
 		TEST(ListManualTest, ConstIteratorGetDataAndAssignment)
 		{
 #if defined TT_TEST_CONST_ITERATOR_DATA_ASSIGNMENT
-			DoublyLinkedList list;
-			DoublyLinkedList::ConstIterator cit = list.GetConstBegin();
+			DoublyLinkedList<ResultData> list;
+			DoublyLinkedList<ResultData>::ConstIterator<ResultData> cit = list.GetConstBegin();
 			list.AddNode(cit);
 			cit->name = "name";
 #endif //TT_TEST_CONST_ITERATOR_DATA_ASSIGNMENT
@@ -156,33 +156,33 @@ namespace ex01_DataStructure
 		}
 
 		/**********************************************************************************//**
-			@brief		ConstIteratorから、Iteratorへコピーを行った際の挙動テスト
+			@brief		ConstIterator<ResultData>から、Iterator<ResultData>へコピーを行った際の挙動テスト
 			@details	ID:イテレータ-17 (手動)\n
 						イテレータのコピー機能のテストです。\n
-						ConstIteratorから、Iteratorへコピーを行った際の挙動を確認しています。\n
+						ConstIterator<ResultData>から、Iterator<ResultData>へコピーを行った際の挙動を確認しています。\n
 						コンパイルエラーになると成功です。\n
 		*//***********************************************************************************/
 		TEST(ListManualTest, CopyConstIteratorToIterator)
 		{
 #if defined TT_TEST_CONST_ITERATOR_COPY_TO_ITERATOR
-			DoublyLinkedList::ConstIterator cit;
-			DoublyLinkedList::Iterator it = cit;
+			DoublyLinkedList<ResultData>::ConstIterator<ResultData> cit;
+			DoublyLinkedList<ResultData>::Iterator<ResultData> it = cit;
 #endif //TT_TEST_CONST_ITERATOR_COPY_TO_ITERATOR
 			SUCCEED();
 		}
 
 		/**********************************************************************************//**
-			@brief		IteratorにConstIteratorを代入した際の挙動テスト
+			@brief		Iterator<ResultData>にConstIterator<ResultData>を代入した際の挙動テスト
 			@details	ID:イテレータ-19 (手動)\n
 						イテレータの代入のテストです。\n
-						IteratorにConstIteratorを代入した際の挙動を確認しています。\n
+						Iterator<ResultData>にConstIterator<ResultData>を代入した際の挙動を確認しています。\n
 						コンパイルエラーとなれば成功です。\n
 		*//***********************************************************************************/
 		TEST(ListManualTest, AssignmentConstIteratorToIterator)
 		{
 #if defined TT_TEST_ASSIGNMENT_CONST_ITERATOR_TO_ITERATOR
-			DoublyLinkedList::ConstIterator cit;
-			DoublyLinkedList::Iterator it;
+			DoublyLinkedList<ResultData>::ConstIterator<ResultData> cit;
+			DoublyLinkedList<ResultData>::Iterator<ResultData> it;
 			it = cit;
 #endif //TT_TEST_ASSIGNMENT_CONST_ITERATOR_TO_ITERATOR
 			SUCCEED();

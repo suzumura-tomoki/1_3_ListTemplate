@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32901.82
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "１－３双方向リストのテンプレート化", "１－３双方向リストのテンプレート化\１－３双方向リストのテンプレート化.vcxproj", "{D025545B-FC79-4A5E-8608-318F983924C9}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1_3_リストのテンプレート化", "1_3_リストのテンプレート化\1_3_リストのテンプレート化.vcxproj", "{D025545B-FC79-4A5E-8608-318F983924C9}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestForList", "TestForList\TestForList.vcxproj", "{DA7B5A7A-5AF5-4F72-90B0-E5C2F64018F9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ListManualTest", "ListManualTest\ListManualTest.vcxproj", "{7A15E01C-D938-4957-AC17-AEDC2C1107C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,14 @@ Global
 		{DA7B5A7A-5AF5-4F72-90B0-E5C2F64018F9}.Release|x64.Build.0 = Release|x64
 		{DA7B5A7A-5AF5-4F72-90B0-E5C2F64018F9}.Release|x86.ActiveCfg = Release|Win32
 		{DA7B5A7A-5AF5-4F72-90B0-E5C2F64018F9}.Release|x86.Build.0 = Release|Win32
+		{7A15E01C-D938-4957-AC17-AEDC2C1107C0}.Debug|x64.ActiveCfg = Debug|x64
+		{7A15E01C-D938-4957-AC17-AEDC2C1107C0}.Debug|x64.Build.0 = Debug|x64
+		{7A15E01C-D938-4957-AC17-AEDC2C1107C0}.Debug|x86.ActiveCfg = Debug|Win32
+		{7A15E01C-D938-4957-AC17-AEDC2C1107C0}.Debug|x86.Build.0 = Debug|Win32
+		{7A15E01C-D938-4957-AC17-AEDC2C1107C0}.Release|x64.ActiveCfg = Release|x64
+		{7A15E01C-D938-4957-AC17-AEDC2C1107C0}.Release|x64.Build.0 = Release|x64
+		{7A15E01C-D938-4957-AC17-AEDC2C1107C0}.Release|x86.ActiveCfg = Release|Win32
+		{7A15E01C-D938-4957-AC17-AEDC2C1107C0}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
