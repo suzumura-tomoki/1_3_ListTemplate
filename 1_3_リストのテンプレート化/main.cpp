@@ -13,7 +13,7 @@ int main() {
 	}
 
 	DoublyLinkedList<ResultData> list;
-	DoublyLinkedList<ResultData>::Iterator<ResultData> it;
+	DoublyLinkedList<ResultData>::Iterator it;
 
 	//スコア読み込み
 	while (ifsScoreFile.eof() == false)
@@ -60,7 +60,7 @@ int main() {
 	ifsScoreFile.close();
 
 	//読み込んだ値を出力
-	const DoublyLinkedList<ResultData>::Iterator<ResultData> end = list.GetEnd();
+	const DoublyLinkedList<ResultData>::Iterator end = list.GetEnd();
 	for (it = list.GetBegin(); it != end; it++) {
 		printf(it->score.c_str());
 		printf(it->name.c_str());

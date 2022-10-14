@@ -50,7 +50,7 @@ namespace ex01_DataStructure
 		{
 #if defined TT_TEST_INSERT_WHEN_CONST
 			const DoublyLinkedList<ResultData> list;
-			DoublyLinkedList<ResultData>::ConstIterator<ResultData> it = list.GetConstBegin();
+			DoublyLinkedList<ResultData>::ConstIterator it = list.GetConstBegin();
 			list.Insert(it, ResultData());//ここでエラー
 #endif //TT_TEST_INSERT_WHEN_CONST
 			SUCCEED();
@@ -67,7 +67,7 @@ namespace ex01_DataStructure
 		{
 #if defined TT_TEST_DELETE_WHEN_CONST
 			const DoublyLinkedList<ResultData> list;
-			DoublyLinkedList<ResultData>::ConstIterator<ResultData> it = list.GetConstBegin();
+			DoublyLinkedList<ResultData>::ConstIterator it = list.GetConstBegin();
 			list.Delete(it);//ここでエラー
 #endif //TT_TEST_DELETE_WHEN_CONST
 			SUCCEED();
@@ -148,7 +148,7 @@ namespace ex01_DataStructure
 		{
 #if defined TT_TEST_CONST_ITERATOR_DATA_ASSIGNMENT
 			DoublyLinkedList<ResultData> list;
-			DoublyLinkedList<ResultData>::ConstIterator<ResultData> cit = list.GetConstBegin();
+			DoublyLinkedList<ResultData>::ConstIterator cit = list.GetConstBegin();
 			list.Insert(cit, ResultData());
 			cit->name = "name";
 #endif //TT_TEST_CONST_ITERATOR_DATA_ASSIGNMENT
@@ -165,8 +165,8 @@ namespace ex01_DataStructure
 		TEST(ListManualTest, CopyConstIteratorToIterator)
 		{
 #if defined TT_TEST_CONST_ITERATOR_COPY_TO_ITERATOR
-			DoublyLinkedList<ResultData>::ConstIterator<ResultData> cit;
-			DoublyLinkedList<ResultData>::Iterator<ResultData> it = cit;
+			DoublyLinkedList<ResultData>::ConstIterator cit;
+			DoublyLinkedList<ResultData>::Iterator it = cit;
 #endif //TT_TEST_CONST_ITERATOR_COPY_TO_ITERATOR
 			SUCCEED();
 		}
@@ -181,8 +181,8 @@ namespace ex01_DataStructure
 		TEST(ListManualTest, AssignmentConstIteratorToIterator)
 		{
 #if defined TT_TEST_ASSIGNMENT_CONST_ITERATOR_TO_ITERATOR
-			DoublyLinkedList<ResultData>::ConstIterator<ResultData> cit;
-			DoublyLinkedList<ResultData>::Iterator<ResultData> it;
+			DoublyLinkedList<ResultData>::ConstIterator cit;
+			DoublyLinkedList<ResultData>::Iterator it;
 			it = cit;
 #endif //TT_TEST_ASSIGNMENT_CONST_ITERATOR_TO_ITERATOR
 			SUCCEED();

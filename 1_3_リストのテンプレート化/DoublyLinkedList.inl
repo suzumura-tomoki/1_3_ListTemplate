@@ -1,20 +1,22 @@
-#include "DoublyLinkedList.h"
+#pragma once
+#include"DoublyLinkedList.h"
 #include<assert.h>
 #include<string>//abs()のため
 
 template<typename Type>
-DoublyLinkedList<Type>::DoublyLinkedList() 
+DoublyLinkedList<Type>::DoublyLinkedList()
 	:dummy({ nullptr,nullptr,Type() })
-	,pTop(&dummy)
-	,size(0)
+	, pTop(&dummy)
+	, size(0)
 {
 	//初期化子リストで初期化
 }
 
+
 template<typename Type>
 DoublyLinkedList<Type>::~DoublyLinkedList()
 {
-	DoublyLinkedList<Type>::Iterator<Type> it = GetBegin();
+	DoublyLinkedList<Type>::Iterator it = GetBegin();
 
 	while (size > 0)
 	{
@@ -31,7 +33,7 @@ unsigned int DoublyLinkedList<Type>::GetSize()const
 
 
 template<typename Type>
-bool DoublyLinkedList<Type>::Insert(ConstIterator<Type>& iterator, const Type& data)
+bool DoublyLinkedList<Type>::Insert(ConstIterator& iterator, const Type& data)
 {
 	if (this != iterator.pList)
 	{
@@ -71,7 +73,7 @@ bool DoublyLinkedList<Type>::Insert(ConstIterator<Type>& iterator, const Type& d
 }
 
 template<typename Type>
-bool DoublyLinkedList<Type>::Delete(ConstIterator<Type>& iterator)
+bool DoublyLinkedList<Type>::Delete(ConstIterator& iterator)
 {
 	// イテレータが自分のリストのイテレータか判断する
 	if (this != iterator.pList)
@@ -118,33 +120,32 @@ bool DoublyLinkedList<Type>::Delete(ConstIterator<Type>& iterator)
 }
 
 template<typename Type>
-DoublyLinkedList<Type>::Iterator<Type> DoublyLinkedList<Type>::GetBegin()
+typename DoublyLinkedList<Type>::Iterator DoublyLinkedList<Type>::GetBegin()
 {
-	return Iterator<Type>(this, pTop);
+	return Iterator(this, pTop);
 }
 
 template<typename Type>
-DoublyLinkedList<Type>::ConstIterator<Type> DoublyLinkedList<Type>::GetConstBegin()const
+typename DoublyLinkedList<Type>::ConstIterator DoublyLinkedList<Type>::GetConstBegin()const
 {
-	return ConstIterator<Type>(this, pTop);
+	return ConstIterator(this, pTop);
 }
 
 template<typename Type>
-DoublyLinkedList<Type>::Iterator<Type> DoublyLinkedList<Type>::GetEnd()
+typename DoublyLinkedList<Type>::Iterator DoublyLinkedList<Type>::GetEnd()
 {
-	return Iterator<Type>(this, &dummy);
+	return Iterator(this, &dummy);
 }
 
 template<typename Type>
-DoublyLinkedList<Type>::ConstIterator<Type> DoublyLinkedList<Type>::GetConstEnd()const
+typename DoublyLinkedList<Type>::ConstIterator DoublyLinkedList<Type>::GetConstEnd()const
 {
 	//コンストメンバ関数の中ではメンバ変数がコンストとして扱われますが、引数に渡せないためコンストを消します
-	return ConstIterator<Type>(this, const_cast<Node*>(&dummy));
+	return ConstIterator(this, const_cast<Node*>(&dummy));
 }
 
 template<typename Type>
-template<typename TypeCI>
-DoublyLinkedList<Type>::ConstIterator<TypeCI>::ConstIterator()
+DoublyLinkedList<Type>::ConstIterator::ConstIterator()
 	:pList(nullptr)
 	,pNode(nullptr)
 {
@@ -152,8 +153,7 @@ DoublyLinkedList<Type>::ConstIterator<TypeCI>::ConstIterator()
 }
 
 template<typename Type>
-template<typename TypeCI>
-DoublyLinkedList<Type>::ConstIterator<TypeCI>::ConstIterator(const DoublyLinkedList<Type>* _pList, Node* _pNode)
+DoublyLinkedList<Type>::ConstIterator::ConstIterator(const DoublyLinkedList<Type>* _pList, Node* _pNode)
 	:pList(_pList)
 	,pNode(_pNode)
 {
@@ -161,23 +161,20 @@ DoublyLinkedList<Type>::ConstIterator<TypeCI>::ConstIterator(const DoublyLinkedL
 }
 
 template<typename Type>
-template<typename TypeCI>
-DoublyLinkedList<Type>::ConstIterator<TypeCI>::ConstIterator(const ConstIterator<TypeCI>& obj)
+DoublyLinkedList<Type>::ConstIterator::ConstIterator(const ConstIterator& obj)
 {
 	this->pList = obj.pList;
 	this->pNode = obj.pNode;
 }
 
 template<typename Type>
-template<typename TypeCI>
-inline DoublyLinkedList<Type>::ConstIterator<TypeCI>::~ConstIterator()
+DoublyLinkedList<Type>::ConstIterator::~ConstIterator()
 {
 	//何もしない
 }
 
 template<typename Type>
-template<typename TypeCI>
-DoublyLinkedList<Type>::ConstIterator<TypeCI>& DoublyLinkedList<Type>::ConstIterator<TypeCI>::operator++()
+typename DoublyLinkedList<Type>::ConstIterator& DoublyLinkedList<Type>::ConstIterator::operator++()
 {
 	assert(this->pList != nullptr);//リストの参照がない場合
 	assert(this->pNode != nullptr);//ノードの参照がない場合
@@ -188,21 +185,19 @@ DoublyLinkedList<Type>::ConstIterator<TypeCI>& DoublyLinkedList<Type>::ConstIter
 }
 
 template<typename Type>
-template<typename TypeCI>
-DoublyLinkedList<Type>::ConstIterator<TypeCI> DoublyLinkedList<Type>::ConstIterator<TypeCI>::operator++(int)
+typename DoublyLinkedList<Type>::ConstIterator DoublyLinkedList<Type>::ConstIterator::operator++(int)
 {
 	assert(this->pList != nullptr);//リストの参照がない
 	assert(this->pNode != nullptr);//ノードの参照がない場合
 	assert(this->pNode != &this->pList->dummy);//末尾ノードである
 
-	ConstIterator<TypeCI> cit = *this;
+	ConstIterator cit = *this;
 	operator++();
 	return cit;
 }
 
 template<typename Type>
-template<typename TypeCI>
-DoublyLinkedList<Type>::ConstIterator<TypeCI>& DoublyLinkedList<Type>::ConstIterator<TypeCI>::operator--()
+typename DoublyLinkedList<Type>::ConstIterator& DoublyLinkedList<Type>::ConstIterator::operator--()
 {
 	assert(this->pList != nullptr);//リストの参照がない
 	assert(this->pNode != nullptr);//ノードの参照がない場合
@@ -212,20 +207,18 @@ DoublyLinkedList<Type>::ConstIterator<TypeCI>& DoublyLinkedList<Type>::ConstIter
 }
 
 template<typename Type>
-template<typename TypeCI>
-DoublyLinkedList<Type>::ConstIterator<TypeCI> DoublyLinkedList<Type>::ConstIterator<TypeCI>::operator--(int)
+typename DoublyLinkedList<Type>::ConstIterator DoublyLinkedList<Type>::ConstIterator::operator--(int)
 {
 	assert(this->pList != nullptr);//リストの参照がない
 	assert(this->pNode != nullptr);//ノードの参照がない場合
 	assert(this->pNode->pPrevious != nullptr);//先頭ノードである　またはリストが空の時の末尾ノード
-	ConstIterator<TypeCI> cit = *this;
+	ConstIterator cit = *this;
 	operator--();
 	return cit;
 }
 
 template<typename Type>
-template<typename TypeCI>
-DoublyLinkedList<Type>::ConstIterator<TypeCI> DoublyLinkedList<Type>::ConstIterator<TypeCI>::operator+(int n)const
+typename DoublyLinkedList<Type>::ConstIterator DoublyLinkedList<Type>::ConstIterator::operator+(int n)const
 {
 	//エラーチェック　他の項目は++演算子の呼び出し時に行われる
 	//先にノードにアクセスするのでノードの参照のみチェックしておく
@@ -261,8 +254,7 @@ DoublyLinkedList<Type>::ConstIterator<TypeCI> DoublyLinkedList<Type>::ConstItera
 }
 
 template<typename Type>
-template<typename TypeCI>
-DoublyLinkedList<Type>::ConstIterator<TypeCI> DoublyLinkedList<Type>::ConstIterator<TypeCI>::operator-(int n)const
+typename DoublyLinkedList<Type>::ConstIterator DoublyLinkedList<Type>::ConstIterator::operator-(int n)const
 {
 	//エラーチェック　他の項目は++演算子の呼び出し時に行われる
 	//先にノードにアクセスするのでノードの参照のみチェックしておく
@@ -298,22 +290,19 @@ DoublyLinkedList<Type>::ConstIterator<TypeCI> DoublyLinkedList<Type>::ConstItera
 }
 
 template<typename Type>
-template<typename TypeCI>
-bool DoublyLinkedList<Type>::ConstIterator<TypeCI>::operator==(const ConstIterator<TypeCI>& it)const
+bool DoublyLinkedList<Type>::ConstIterator::operator==(const ConstIterator& it)const
 {
 	return this->pNode == it.pNode;
 }
 
 template<typename Type>
-template<typename TypeCI>
-bool DoublyLinkedList<Type>::ConstIterator<TypeCI>::operator!=(const ConstIterator<TypeCI>& it)const
+bool DoublyLinkedList<Type>::ConstIterator::operator!=(const ConstIterator& it)const
 {
 	return !(*this == it);
 }
 
 template<typename Type>
-template<typename TypeCI>
-const Type& DoublyLinkedList<Type>::ConstIterator<TypeCI>::operator*()const
+const Type& DoublyLinkedList<Type>::ConstIterator::operator*()const
 {
 	assert(pList != nullptr);//pListがnullptrでないこと
 	assert(pNode != &pList->dummy);//pNodeがダミーでないこと
@@ -322,8 +311,8 @@ const Type& DoublyLinkedList<Type>::ConstIterator<TypeCI>::operator*()const
 }
 
 template<typename Type>
-template<typename TypeCI>
-const Type* DoublyLinkedList<Type>::ConstIterator<TypeCI>::operator->()const
+
+const Type* DoublyLinkedList<Type>::ConstIterator::operator->()const
 {
 	assert(pList != nullptr);//pListがnullptrでないこと
 	assert(pNode != &pList->dummy);//pNodeがダミーでないこと
@@ -332,39 +321,34 @@ const Type* DoublyLinkedList<Type>::ConstIterator<TypeCI>::operator->()const
 }
 
 template<typename Type>
-template<typename TypeI>
-DoublyLinkedList<Type>::Iterator<TypeI>::Iterator()
+DoublyLinkedList<Type>::Iterator::Iterator()
 {
 	//何もしない　メンバがいない
 }
 
 template<typename Type>
-template<typename TypeI>
-DoublyLinkedList<Type>::Iterator<TypeI>::Iterator(DoublyLinkedList<TypeI>* _pList, Node* _pNode) : ConstIterator<TypeI>(_pList, _pNode)
+DoublyLinkedList<Type>::Iterator::Iterator(DoublyLinkedList<Type>* _pList, Node* _pNode) : ConstIterator(_pList, _pNode)
 {
-	//基底クラスConstIterator<TypeI>のコンストラクタに引数を渡す
+	//基底クラスConstIteratorのコンストラクタに引数を渡す
 	//ここでは何もしない
 }
 
 template<typename Type>
-template<typename TypeI>
-DoublyLinkedList<Type>::Iterator<TypeI>::~Iterator()
+DoublyLinkedList<Type>::Iterator::~Iterator()
 {
 	//何もしない
 }
 
 template<typename Type>
-template<typename TypeI>
-DoublyLinkedList<Type>::Iterator<TypeI>& DoublyLinkedList<Type>::Iterator<TypeI>::operator++()
+typename DoublyLinkedList<Type>::Iterator& DoublyLinkedList<Type>::Iterator::operator++()
 {
-	ConstIterator<TypeI>::operator++();
+	ConstIterator::operator++();
 
 	return *this;
 }
 
 template<typename Type>
-template<typename TypeI>
-DoublyLinkedList<Type>::Iterator<TypeI> DoublyLinkedList<Type>::Iterator<TypeI>::operator++(int)
+typename DoublyLinkedList<Type>::Iterator DoublyLinkedList<Type>::Iterator::operator++(int)
 {
 	Iterator it = *this;
 
@@ -374,8 +358,7 @@ DoublyLinkedList<Type>::Iterator<TypeI> DoublyLinkedList<Type>::Iterator<TypeI>:
 }
 
 template<typename Type>
-template<typename TypeI>
-DoublyLinkedList<Type>::Iterator<TypeI>& DoublyLinkedList<Type>::Iterator<TypeI>::operator--()
+typename DoublyLinkedList<Type>::Iterator& DoublyLinkedList<Type>::Iterator::operator--()
 {
 	ConstIterator::operator--();
 
@@ -383,8 +366,7 @@ DoublyLinkedList<Type>::Iterator<TypeI>& DoublyLinkedList<Type>::Iterator<TypeI>
 }
 
 template<typename Type>
-template<typename TypeI>
-DoublyLinkedList<Type>::Iterator<TypeI> DoublyLinkedList<Type>::Iterator<TypeI>::operator--(int)
+typename DoublyLinkedList<Type>::Iterator DoublyLinkedList<Type>::Iterator::operator--(int)
 {
 	Iterator it = *this;
 
@@ -394,35 +376,33 @@ DoublyLinkedList<Type>::Iterator<TypeI> DoublyLinkedList<Type>::Iterator<TypeI>:
 }
 
 template<typename Type>
-template<typename TypeI>
-DoublyLinkedList<Type>::Iterator<TypeI> DoublyLinkedList<Type>::Iterator<TypeI>::operator+(int n)const
+typename DoublyLinkedList<Type>::Iterator DoublyLinkedList<Type>::Iterator::operator+(int n)const
 {
-	ConstIterator<TypeI> cit = ConstIterator<TypeI>::operator+(n);
+	ConstIterator cit = ConstIterator::operator+(n);
 
 	//関数がconstのため、別のインスタンスの親クラスのメンバもconstとして扱われてしまうので、引数として渡すためにconstを外します
 	return Iterator(const_cast<DoublyLinkedList<Type>*>(cit.pList), const_cast<Node*>(cit.pNode));
 }
 
 template<typename Type>
-template<typename TypeI>
-DoublyLinkedList<Type>::Iterator<TypeI> DoublyLinkedList<Type>::Iterator<TypeI>::operator-(int n)const
+typename DoublyLinkedList<Type>::Iterator DoublyLinkedList<Type>::Iterator::operator-(int n)const
 {
-	ConstIterator<TypeI> cit = ConstIterator<TypeI>::operator-(n);
+	ConstIterator cit = ConstIterator::operator-(n);
 
 	//関数がconstのため、別のインスタンスの親クラスのメンバもconstとして扱われてしまうので、引数として渡すためにconstを外します
 	return Iterator(const_cast<DoublyLinkedList<Type>*>(cit.pList), const_cast<Node*>(cit.pNode));
 }
 
 template<typename Type>
-template<typename TypeI>
-Type& DoublyLinkedList<Type>::Iterator<TypeI>::operator*()
+Type& DoublyLinkedList<Type>::Iterator::operator*()
 {
-	return const_cast<TypeI&>(ConstIterator<TypeI>::operator*());
+	//コンストイテレータの機能を流用してコンストを解除
+	return const_cast<Type&>(ConstIterator::operator*());
 }
 
 template<typename Type>
-template<typename TypeI>
-Type* DoublyLinkedList<Type>::Iterator<TypeI>::operator->()
+Type* DoublyLinkedList<Type>::Iterator::operator->()
 {
-	return const_cast<TypeI*>(ConstIterator<TypeI>::operator->());//ここではポインタの->は呼ばれていない
+	//コンストイテレータの機能を流用してコンストを解除
+	return const_cast<Type*>(ConstIterator::operator->());//ここではポインタの->は呼ばれていない
 }
