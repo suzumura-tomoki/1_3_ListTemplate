@@ -13,11 +13,12 @@ int main() {
 	}
 
 	DoublyLinkedList<ResultData> list;
-	DoublyLinkedList<ResultData>::Iterator<ResultData> iterator = list.GetBegin();
+	DoublyLinkedList<ResultData>::Iterator<ResultData> it;
+
 	//スコア読み込み
 	while (ifsScoreFile.eof() == false)
 	{
-		list.AddNode(iterator);
+		ResultData data{};
 
 		//ファイルの読み取り
 		char readCharacter;
@@ -29,7 +30,7 @@ int main() {
 			if (ifsScoreFile.eof())
 				break;
 
-			iterator->score += readCharacter;
+			data.score += readCharacter;
 
 			if (readCharacter == ' ')
 				break;
@@ -45,21 +46,24 @@ int main() {
 			if (ifsScoreFile.eof())
 				break;
 
-			iterator->name += readCharacter;
+			data.name += readCharacter;
 
 			if (readCharacter == '\n')
 				break;
 		}
 
-		iterator++;
+		//読み取ったデータの挿入
+		it = list.GetEnd();
+		list.Insert(it, data);
 	}
 
 	ifsScoreFile.close();
 
 	//読み込んだ値を出力
-	for (iterator = list.GetBegin(); iterator != list.GetEnd(); iterator++) {
-		printf(iterator->score.c_str());
-		printf(iterator->name.c_str());
+	const DoublyLinkedList<ResultData>::Iterator<ResultData> end = list.GetEnd();
+	for (it = list.GetBegin(); it != end; it++) {
+		printf(it->score.c_str());
+		printf(it->name.c_str());
 		printf("\n");
 	}
 

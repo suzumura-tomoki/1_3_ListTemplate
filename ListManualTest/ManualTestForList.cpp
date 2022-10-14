@@ -51,7 +51,7 @@ namespace ex01_DataStructure
 #if defined TT_TEST_INSERT_WHEN_CONST
 			const DoublyLinkedList<ResultData> list;
 			DoublyLinkedList<ResultData>::ConstIterator<ResultData> it = list.GetConstBegin();
-			list.AddNode(it, 1);//ここでエラー
+			list.Insert(it, ResultData());//ここでエラー
 #endif //TT_TEST_INSERT_WHEN_CONST
 			SUCCEED();
 		}
@@ -68,7 +68,7 @@ namespace ex01_DataStructure
 #if defined TT_TEST_DELETE_WHEN_CONST
 			const DoublyLinkedList<ResultData> list;
 			DoublyLinkedList<ResultData>::ConstIterator<ResultData> it = list.GetConstBegin();
-			list.DeleteNode(it);//ここでエラー
+			list.Delete(it);//ここでエラー
 #endif //TT_TEST_DELETE_WHEN_CONST
 			SUCCEED();
 		}
@@ -149,7 +149,7 @@ namespace ex01_DataStructure
 #if defined TT_TEST_CONST_ITERATOR_DATA_ASSIGNMENT
 			DoublyLinkedList<ResultData> list;
 			DoublyLinkedList<ResultData>::ConstIterator<ResultData> cit = list.GetConstBegin();
-			list.AddNode(cit);
+			list.Insert(cit, ResultData());
 			cit->name = "name";
 #endif //TT_TEST_CONST_ITERATOR_DATA_ASSIGNMENT
 			SUCCEED();

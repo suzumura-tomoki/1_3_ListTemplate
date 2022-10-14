@@ -1,144 +1,273 @@
 #pragma once
 
-// @brief 双方向リストのクラス
-// @brief 別名bi-directional list
+/**
+ * @brief 双方向リストのクラス\n
+ *		  別名bi-directional list
+ */
 template<typename Type>
 class DoublyLinkedList
 {
 public:
-	// @brief 双方向リストのノード
-	// @brief 構造体ResultDataを格納している
+
+	/** @brief 双方向リストのノード */
 	struct Node {
 		DoublyLinkedList<Type>::Node* pPrevious = nullptr;
 		DoublyLinkedList<Type>::Node* pNext = nullptr;
-		Type resultData;
+		Type data;
 	};
 
-	// @brief 双方向リストのイテレータ
-	// @brief *演算子でイテレータが示すデータにアクセスできます
+	/**
+	 * @brief 双方向リストのコンストイテレータ\n
+	 *		  ＊演算子または->演算子でデータにアクセスできます
+	 */
 	template<typename TypeCI = Type>
 	class ConstIterator {
 		friend DoublyLinkedList<Type>;
 	public:
-		//コンストラクタ
+		/** @brief コンストラクタ*/
 		ConstIterator();
-		ConstIterator(const DoublyLinkedList<Type>* _pList, const Node* _pNode);
+		/**
+		 * @brief コンストラクタ
+		 * @param[in] _pList 参照するリストへのポインタ\n
+		 *					 nullptrの場合、挿入や削除に失敗し、イテレータを移動する際にエラーになります\n
+		 *					 _pListと_pNodeに関連が無い場合、参照するリストにイテレータを渡すことで挿入や削除が行えますが、実際にはノードの所属するリストが更新されます
+		 * @param[in] _pNode コンストイテレータが示すノードへのポインタ\n
+		 *					 nullptrの場合は挿入や削除が行われず、イテレータを移動する際にエラーになります。
+		 */
+		ConstIterator(const DoublyLinkedList<Type>* _pList, Node* _pNode);
 
-		// @brief 次の要素に移動します
-		//        次の要素に移動したイテレータを返します
-		ConstIterator<TypeCI> operator++();
-		// @brief 次の要素に移動します
-		//        次の要素に移動していないイテレータを返します
-		ConstIterator<TypeCI> operator++(int n);
-		// @brief 前の要素に移動します
-		//        前の要素に移動したイテレータを返します
-		ConstIterator<TypeCI> operator--();
-		// @brief 前の要素します
-		//        前の要素に移動していないイテレータを返します
-		ConstIterator<TypeCI> operator--(int n);
-
-		// @brief 末尾方向に指定した数だけ移動したコンストイテレータを返します
-		ConstIterator<TypeCI> operator+(int n);
-		// @brief 先頭方向に指定した数だけ移動したコンストイテレータを返します
-		ConstIterator<TypeCI> operator-(int n);
-
-		// @brief イテレータが示すコンスト要素の参照を取得します
-		const Type& operator*();
-		// @brief イテレータが示すコンスト要素の参照を取得します
-		const Type* operator->();//何故かポインタを返さないといけない
-		// @brief コピーコンストラクタ
+		/**
+		 * @brief コピーコンストラクタ
+		 * @param[in] obj コピー元のオブジェクト
+		 */
 		ConstIterator(const ConstIterator<TypeCI>& obj);
 
-		// @brief イテレータを比較します
-		bool operator==(ConstIterator<TypeCI> it);
-		bool operator!=(ConstIterator<TypeCI> it);
+		/** @brief デストラクタ */
+		virtual ~ConstIterator();
 
-		// @brief イテレータが参照するリストの参照を取得します
-		const DoublyLinkedList<Type>& GetList();
+		/**
+		 * @brief 次の要素に移動します
+		 * @return 移動したコンストイテレータ
+		 */
+		ConstIterator<TypeCI>& operator++();
+		/**
+		 * @brief 次の要素に移動します
+		 * @return 移動していないコンストイテレータ
+		 */
+		ConstIterator<TypeCI> operator++(int);
+		/**
+		 * @brief 前の要素に移動します
+		 * @return 移動したコンストイテレータ
+		 */
+		ConstIterator<TypeCI>& operator--();
+		/**
+		 * @brief 前の要素に移動します
+		 * @return 移動していないコンストイテレータ
+		 */
+		ConstIterator<TypeCI> operator--(int);
+
+		/**
+		 * @brief 末尾方向に指定した数だけ移動したコンストイテレータを返します
+		 * @param[in] n 移動回数\n
+		 *				リストの範囲を越えて指定した場合、先頭または末尾のコンストイテレータを返します
+		 * @return 移動したコンストイテレータ
+		 */
+		ConstIterator<TypeCI> operator+(int n)const;
+		/**
+		 * @brief 先頭方向に指定した数だけ移動したコンストイテレータを返します
+		 * @param[in] n 移動回数\n
+		 *				リストの範囲を越えて指定した場合、先頭または末尾のコンストイテレータを返します
+		 * @return 移動したコンストイテレータ
+		 */
+		ConstIterator<TypeCI> operator-(int n)const;
+
+		/**
+		 * @brief イテレータの示すノードが同じものか比較します
+		 * @param[in] it 比較対象
+		 * @return true:同じノードを指している\n
+		 *		   false:異なるノードを指している
+		 */
+		bool operator==(const ConstIterator<TypeCI>& it)const;
+		/**
+		 * @brief イテレータの示すノードが異なるものか比較します
+		 * @param[in] it 比較対象
+		 * @return true:異なるノードを指している\n
+		 *		   false:同じノードを指している
+		 */
+		bool operator!=(const ConstIterator<TypeCI>& it)const;
+
+		/**
+		 * @brief コンストイテレータが示す要素のコンスト参照を取得します
+		 * @return イテレータが示す要素のコンスト参照
+		 */
+		const Type& operator*()const;
+		/**
+		 * @brief コンストイテレータが示すコンスト要素を取得します\n
+		 *		  暗黙的に戻り値の持つ->が呼ばれます
+		 * @return コンストイテレータが示すコンスト要素へのポインタ
+		 */
+		const Type* operator->()const;
 
 	protected:
+		/** @brief このイテレータが示すノードへのポインタ */
 		Node* pNode = nullptr;
-		DoublyLinkedList<TypeCI>* pList = nullptr;
+		/** @brief このイテレータが参照しているリストへのポインタ */
+		const DoublyLinkedList<TypeCI>* pList = nullptr;
 	private:
 
 	};
 
-	// @brief 双方向リストのコンストイテレータ
-	// @brief *演算子でイテレータが示すデータにアクセスできる
+	/**
+	 * @brief 双方向リストのイテレータ\n
+	 *		 継承：コンストイテレータ\n
+	 *		 ＊演算子または->演算子でデータにアクセスできます
+	 */
 	template<typename TypeI = Type>
 	class Iterator :public ConstIterator<TypeI> {
 	public:
+		/** @brief コンストラクタ */
 		Iterator();
+		/**
+		 * @brief コンストラクタ
+		 * @param[in] _pList 参照するリストへのポインタ\n
+		 *					 nullptrの場合、挿入や削除に失敗し、イテレータを移動する際にエラーになります\n
+		 *					 _pListと_pNodeに関連が無い場合、参照するリストにイテレータを渡すことで挿入や削除が行えますが、実際にはノードの所属するリストが更新されます
+		 * @param[in] _pNode イテレータが示すノードへのポインタ\n
+		 *					 nullptrの場合は挿入や削除が行われず、イテレータを移動する際にエラーになります。
+		 */
 		Iterator(DoublyLinkedList<TypeI>* _pList, Node* _pNode);
 
-		// @brief 次の要素に移動します
-		//        次の要素に移動したイテレータを返します
-		Iterator<TypeI> operator++();
-		// @brief 次の要素に移動します
-		//        次の要素に移動していないイテレータを返します
-		Iterator<TypeI> operator++(int n);
-		// @brief 前の要素に移動します
-		//        前の要素に移動したイテレータを返します
-		Iterator<TypeI> operator--();
-		// @brief 前の要素します
-		//        前の要素に移動していないイテレータを返します
-		Iterator<TypeI> operator--(int n);
+		/**
+		 * @brief デフォルトコピーコンストラクタ
+		 * @param[in] obj コピー元のオブジェクト
+		 */
+		Iterator(const Iterator& obj) = default;
 
-		// @brief 末尾方向に指定した数だけ移動したイテレータを返します
-		Iterator<TypeI> operator+(int n);
-		// @brief 先頭方向に指定した数だけ移動したイテレータを返します
-		Iterator<TypeI> operator-(int n);
+		/** @brief デストラクタ */
+		virtual ~Iterator();
 
-		// @brief イテレータが示す要素を取得します
+		/**
+		 * @brief 次の要素に移動します
+		 * @return 移動したイテレータ
+		 */
+		Iterator<TypeI>& operator++();
+		/**
+		 * @brief 次の要素に移動します
+		 * @return 移動していないイテレータ
+		 */
+		Iterator<TypeI> operator++(int);
+		/**
+		 * @brief 前の要素に移動します
+		 * @return 移動したイテレータ
+		 */
+		Iterator<TypeI>& operator--();
+		/**
+		 * @brief 前の要素に移動します
+		 * @return 移動していないイテレータ
+		 */
+		Iterator<TypeI> operator--(int);
+
+		/**
+		 * @brief 末尾方向に指定した数だけ移動したイテレータを返します
+		 * @param[in] n 移動回数\n
+		 *				リストの範囲を越えて指定した場合、先頭または末尾のイテレータを返します
+		 * @return 移動したイテレータ
+		 */
+		Iterator<TypeI> operator+(int n)const;
+		/**
+		 * @brief 先頭方向に指定した数だけ移動したイテレータを返します
+		 * @param[in] n 移動回数\n
+		 *				リストの範囲を越えて指定した場合、先頭または末尾のイテレータを返します
+		 * @return 移動したイテレータ
+		 */
+		Iterator<TypeI> operator-(int n)const;
+
+		/**
+		 * @brief イテレータが示す要素の参照を取得します
+		 * @return イテレータが示す要素の参照
+		 */
 		Type& operator*();
-		// @brief イテレータが示すコンスト要素を取得します
-		Type* operator->();//何故かポインタを返さないといけない
+		/**
+		 * @brief イテレータが示す要素を取得します\n
+		 *		  暗黙的に戻り値の持つ->が呼ばれます
+		 * @return イテレータが示す要素へのポインタ
+		 */
+		Type* operator->();
 
 	private:
 
 	};
 
-	// @brief コンストラクタ
+	/** @brief コンストラクタ */
 	DoublyLinkedList();
-	// @brief デストラクタ
-	~DoublyLinkedList();
 
-	// @brief 要素数を取得します
+	/** @brief デフォルトコピーコンストラクタ */
+	DoublyLinkedList(const DoublyLinkedList& obj) = default;
+
+	/**
+	 * @brief デストラクタ\n
+	 * 確保したノードを全て解放する
+	 */
+	virtual ~DoublyLinkedList();
+
+	/**
+	 * @brief 要素数を取得します
+	 * @return 要素数
+	 */
 	unsigned int GetSize()const;
 
-	// @brief イテレータが示す位置に要素を追加します
-	// @param[in,out] 追加位置のイテレータ
-	bool AddNode(ConstIterator<Type>& iterator);
-	// @brief イテレータが示す位置に要素を追加します
-	// @param[in,out] 追加位置のイテレータ
-	bool AddNode(Iterator<Type>& iterator);
+	/**
+	 * @brief イテレータが示す要素の前に要素を挿入します\n
+	 *		  追加した要素にイテレータを移動させます
+	 * @param[in,out] iterator 挿入位置のイテレータ、挿入した要素に移動します
+	 * @param[in]	  data     格納するデータ
+	 * @return true:挿入に成功\n
+	 *		   false:挿入に失敗\n
+	 * 別のリストのイテレータを渡した場合や、リストやノードへの参照がないイテレータを渡した場合に挿入に失敗します
+	 */
+	bool Insert(ConstIterator<Type>& iterator, const Type& data);
 
-	// @brief イテレータが示す位置の要素を削除します
-	// @param[in,out] 削除位置のイテレータ
-	bool DeleteNode(ConstIterator<Type>& iterator);
+	/**
+	 * @brief イテレータが示す要素を削除します\n
+	 *		  削除した要素の次の要素にイテレータを移動させます
+	 * @param[in,out] iterator 削除する要素のイテレータ
+	 * @return true:削除に成功\n
+	 *		   false:削除に失敗\n
+	 * 別のリストのイテレータを渡した場合や、リストやノードへの参照がないイテレータを渡した場合に削除に失敗します\n
+	 * 末尾のイテレータを渡した場合も失敗します
+	 */
+	bool Delete(ConstIterator<Type>& iterator);
 
-	// @brief 先頭のイテレータを取得
+	/**
+	 * @brief 先頭のイテレータを取得
+	 * @return 先頭のイテレータ
+	 */
 	Iterator<Type> GetBegin();
 
-	// @brief 先頭のコンストイテレータを取得
+	/**
+	 * @brief 先頭のコンストイテレータを取得
+	 * @return 先頭のコンストイテレータ
+	 */
 	ConstIterator<Type> GetConstBegin()const;
 
-	// @brief 末尾のイテレータを取得
+	/**
+	 * @brief 末尾のイテレータを取得
+	 * @return 末尾のイテレータ
+	 */
 	Iterator<Type> GetEnd();
 
-	// @brief 末尾のコンストイテレータを取得
+	/**
+	 * @brief 末尾のコンストイテレータを取得
+	 * @return 末尾のコンストイテレータ
+	 */
 	ConstIterator<Type> GetConstEnd()const;
-
-	// @brief 先頭要素へのポインタを取得
-	//Node* GetNode();
 
 private:
 
-	// @brief 末尾を示すダミー要素　データは格納されない
+	/** @brief 末尾を示すダミー要素　データは格納されない */
 	Node dummy;
-	// @brief 先頭要素へのポインタ
-	Node* pTop = &dummy;
-
-	// @brief 要素の数
-	unsigned int size = 0;
+	/** @brief 先頭要素へのポインタ */
+	Node* pTop;
+	/** @brief 要素の数 */
+	unsigned int size;
 };
