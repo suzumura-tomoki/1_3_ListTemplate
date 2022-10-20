@@ -15,41 +15,34 @@ int main() {
 	DoublyLinkedList<ResultData> list;
 	DoublyLinkedList<ResultData>::Iterator it;
 
-	//スコア読み込み
 	while (ifsScoreFile.eof() == false)
 	{
-		ResultData data{};
-
 		//ファイルの読み取り
-		char readCharacter;
-		while (true)
+
+		ResultData data{};
+		std::string readString{};
+
+		//スコアの読み込み
+		std::getline(ifsScoreFile, readString, '\t');
+
+		//ファイル終端の改行を無視
+		if (ifsScoreFile.eof())
 		{
-			ifsScoreFile.get(readCharacter);
-
-			//ファイル終端の改行を無視
-			if (ifsScoreFile.eof())
-				break;
-
-			data.score += readCharacter;
-
-			if (readCharacter == ' ')
-				break;
-			if (readCharacter == '　')
-				break;
+			break;
 		}
 
-		while (true)
+		//数字の文字列を整数値に変換
+		data.score = std::stoi(readString);
+
+
+		//名前の読み込み
+		//ResultDataに直接読み込む
+		std::getline(ifsScoreFile, data.name, '\n');
+
+		//ファイル終端の改行を無視
+		if (ifsScoreFile.eof())
 		{
-			ifsScoreFile.get(readCharacter);
-
-			//ファイル終端の改行を無視
-			if (ifsScoreFile.eof())
-				break;
-
-			data.name += readCharacter;
-
-			if (readCharacter == '\n')
-				break;
+			break;
 		}
 
 		//読み取ったデータの挿入
@@ -62,7 +55,8 @@ int main() {
 	//読み込んだ値を出力
 	const DoublyLinkedList<ResultData>::Iterator end = list.GetEnd();
 	for (it = list.GetBegin(); it != end; it++) {
-		printf(it->score.c_str());
+		printf(std::to_string(it->score).c_str());
+		printf("\t");
 		printf(it->name.c_str());
 		printf("\n");
 	}
